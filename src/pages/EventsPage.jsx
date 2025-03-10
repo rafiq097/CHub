@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaHandsHelping, FaPrayingHands, FaUsers } from "react-icons/fa";
@@ -11,7 +12,7 @@ const events = [
     date: "March 15, 2025",
     time: "10:00 AM - 4:00 PM",
     location: "New York, USA",
-    image: "https://source.unsplash.com/400x300/?conference",
+    image: "https://pixabay.com/photos/computer-laptop-tech-blue-computer-4795762/",
     category: "Social",
     icon: <FaUsers className="text-blue-600 text-2xl" />,
   },
@@ -21,7 +22,7 @@ const events = [
     date: "April 22, 2025",
     time: "2:00 PM - 6:00 PM",
     location: "London, UK",
-    image: "https://source.unsplash.com/400x300/?meeting",
+    image: "https://res.cloudinary.com/dxqv8mbpg/image/upload/f_auto,q_auto/v1/event-images/event_1737999482266?_a=BAMCkGfi0",
     category: "Religious",
     icon: <FaPrayingHands className="text-green-600 text-2xl" />,
   },
@@ -31,7 +32,7 @@ const events = [
     date: "May 10, 2025",
     time: "9:00 AM - 5:00 PM",
     location: "Berlin, Germany",
-    image: "https://source.unsplash.com/400x300/?teamwork",
+    image: "https://res.cloudinary.com/dxqv8mbpg/image/upload/f_auto,q_auto/v1/event-images/event_1738152998033?_a=BAMCkGfi0",
     category: "Charity",
     icon: <FaHandsHelping className="text-yellow-600 text-2xl" />,
   },
@@ -59,14 +60,54 @@ const events = [
 
 const EventsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [formData, setFormData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eventList, setEventList] = useState(events);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const filteredEvents =
     selectedCategory === "All"
-      ? events
-      : events.filter((event) => event.category === selectedCategory);
+      ? eventList
+      : eventList.filter((event) => event.category === selectedCategory);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const getCategoryIcon = (category) => {
+    switch (category) {
+      case "Social":
+        return <FaUsers className="text-blue-600 text-2xl" />;
+      case "Religious":
+        return <FaPrayingHands className="text-green-600 text-2xl" />;
+      case "Charity":
+        return <FaHandsHelping className="text-yellow-600 text-2xl" />;
+      default:
+        return <FaUsers className="text-gray-600 text-2xl" />;
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newEvent = {
+      id: eventList.length + 1,
+      title: formData.title,
+      date: formData.date,
+      time: formData.time,
+      location: formData.location,
+      category: formData.category,
+      image: "",
+      icon: getCategoryIcon(formData.category),
+    };
+
+    setEventList([...eventList, newEvent]);
+    setFormData({ title: "", date: "", time: "", location: "", category: "" });
+
+    toggleModal();
+  };
 
   return (
     <>
@@ -84,11 +125,11 @@ const EventsPage = () => {
           Join us at our upcoming events and be a part of something amazing!
         </p>
 
-        <div className="flex justify-center gap-4 mb-6">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6">
           {["All", "Social", "Religious", "Charity"].map((category) => (
             <button
               key={category}
-              className={`px-4 py-2 rounded-lg text-lg font-semibold transition ${
+              className={`px-3 py-2 rounded-lg text-base sm:text-lg font-semibold transition ${
                 selectedCategory === category
                   ? "bg-blue-600 text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white"
@@ -100,7 +141,7 @@ const EventsPage = () => {
           ))}
 
           <button
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition"
+            className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition text-base sm:text-lg"
             onClick={toggleModal}
           >
             <FaPlusCircle className="text-lg" />
@@ -131,26 +172,43 @@ const EventsPage = () => {
                 <FaTimes className="text-xl" />
               </button>
               <h2 className="text-2xl font-semibold mb-4">Add New Event</h2>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <input
                   type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleInputChange}
                   placeholder="Event Title"
                   className="w-full px-4 py-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="time"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
                   placeholder="Location"
                   className="w-full px-4 py-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500"
                 />
-                <select className="w-full px-4 py-2 border rounded-lg mb-4 focus:ring-2 focus:ring-blue-500">
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg mb-4 focus:ring-2 focus:ring-blue-500"
+                >
                   <option value="">Select Category</option>
                   <option value="Social">Social</option>
                   <option value="Religious">Religious</option>

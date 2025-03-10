@@ -32,7 +32,7 @@ const Navbar = () => {
             <li
               key={index}
               className="hover:text-blue-800 cursor-pointer transition-colors duration-300"
-              onClick={() => navigate(`/${item.toLowerCase()}`)}
+              onClick={() => navigate(item == "Home" ? "/" : `/${item.toLowerCase()}`)}
             >
               {item}
             </li>
@@ -64,7 +64,7 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => {
                     setIsOpen(false);
-                    navigate(`/${item.toLowerCase()}`);
+                    navigate(item == "Home" ? "/" : `/${item.toLowerCase()}`);
                   }}
                 >
                   {item}
