@@ -12,7 +12,8 @@ const events = [
     date: "March 15, 2025",
     time: "10:00 AM - 4:00 PM",
     location: "New York, USA",
-    image: "https://pixabay.com/photos/computer-laptop-tech-blue-computer-4795762/",
+    image:
+      "https://pixabay.com/photos/computer-laptop-tech-blue-computer-4795762/",
     category: "Social",
     icon: <FaUsers className="text-blue-600 text-2xl" />,
   },
@@ -22,7 +23,8 @@ const events = [
     date: "April 22, 2025",
     time: "2:00 PM - 6:00 PM",
     location: "London, UK",
-    image: "https://res.cloudinary.com/dxqv8mbpg/image/upload/f_auto,q_auto/v1/event-images/event_1737999482266?_a=BAMCkGfi0",
+    image:
+      "https://res.cloudinary.com/dxqv8mbpg/image/upload/f_auto,q_auto/v1/event-images/event_1737999482266?_a=BAMCkGfi0",
     category: "Religious",
     icon: <FaPrayingHands className="text-green-600 text-2xl" />,
   },
@@ -32,7 +34,8 @@ const events = [
     date: "May 10, 2025",
     time: "9:00 AM - 5:00 PM",
     location: "Berlin, Germany",
-    image: "https://res.cloudinary.com/dxqv8mbpg/image/upload/f_auto,q_auto/v1/event-images/event_1738152998033?_a=BAMCkGfi0",
+    image:
+      "https://res.cloudinary.com/dxqv8mbpg/image/upload/f_auto,q_auto/v1/event-images/event_1738152998033?_a=BAMCkGfi0",
     category: "Charity",
     icon: <FaHandsHelping className="text-yellow-600 text-2xl" />,
   },
@@ -180,6 +183,8 @@ const EventsPage = () => {
                   onChange={handleInputChange}
                   placeholder="Event Title"
                   className="w-full px-4 py-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500"
+                  minLength={3}
+                  required
                 />
                 <input
                   type="date"
@@ -187,6 +192,7 @@ const EventsPage = () => {
                   value={formData.date}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500"
+                  required
                 />
                 <input
                   type="time"
@@ -194,6 +200,7 @@ const EventsPage = () => {
                   value={formData.time}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500"
+                  required
                 />
                 <input
                   type="text"
@@ -202,12 +209,15 @@ const EventsPage = () => {
                   onChange={handleInputChange}
                   placeholder="Location"
                   className="w-full px-4 py-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500"
+                  minLength={5}
+                  required
                 />
                 <select
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border rounded-lg mb-4 focus:ring-2 focus:ring-blue-500"
+                  required
                 >
                   <option value="">Select Category</option>
                   <option value="Social">Social</option>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -20,12 +21,12 @@ const Navbar = () => {
   return (
     <nav className="text-blue-600 p-4 shadow-md bg-white">
       <div className="container mx-auto flex justify-between items-center">
-        <h1
-          className="text-3xl font-bold cursor-pointer select-none"
+        <img
+          className="pl-20 h-9 w-60 cursor-pointer select-none"
+          src="/logo.png"
+          alt="Communion"
           onClick={() => navigate("/")}
-        >
-          CommunionHub
-        </h1>
+        />
 
         <ul className="hidden text-lg md:flex gap-8 font-medium">
           {["Home", "Events", "About"].map((item, index) => (
